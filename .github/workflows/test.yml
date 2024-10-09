@@ -3,7 +3,6 @@ on: push
 jobs:
 
   run:
-    name: Build
     runs-on: ubuntu-latest
     steps:
 
