@@ -21,6 +21,8 @@ jobs:
     steps:
       - name: "checkout"
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: validate
         run: |
@@ -50,7 +52,7 @@ jobs:
 
           git config --global user.email "autobump@gha.com"
           git config --global user.name "autobump"
-          git tag $IMAGEVERSION -a
+          git tag $IMAGEVERSION
           git push origin --tags
 
 
