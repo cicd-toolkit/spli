@@ -48,6 +48,8 @@ jobs:
           cat release_description.md
           echo $IMAGEVERSION
 
+          git config --global user.email "autobump@gha.com"
+          git config --global user.name "autobump"
           git tag $IMAGEVERSION -a
           git push origin --tags
 
