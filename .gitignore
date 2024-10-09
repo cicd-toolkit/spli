@@ -1,0 +1,10 @@
+# built binary
+build
+dist
+spli
+.spli
+
+# test results
+cover.out
+testResult_lint.xml
+testResult_unit.xml
