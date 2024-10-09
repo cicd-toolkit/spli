@@ -9,7 +9,7 @@ on:
 permissions:
   id-token: write
   packages: write
-  contents: read
+  contents: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -48,6 +48,7 @@ jobs:
           cat release_description.md
           echo $IMAGEVERSION
 
-          gh release create $IMAGEVERSION -F release_description.md -t $IMAGEVERSION
+          git tag $IMAGEVERSION -a
+          git push origin --tags
 
 
