@@ -4,7 +4,7 @@ name: release
 on:
   push:
     tags:
-      - 'v*'
+      - '*'
 
 permissions:
    contents: write # needed to write releases
@@ -17,18 +17,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # this is important, otherwise it won't checkout the full tree (i.e. no previous tags)
+          fetch-depth: 0
+
       - uses: actions/setup-go@v5
         with:
-          go-version: 1.19
+          go-version: 1.23
           cache: true
+
       - uses: sigstore/cosign-installer@v3.7.0         # installs cosign
+
       - uses: anchore/sbom-action/download-syft@v0.17.2 # installs syft
+
       - uses: docker/login-action@v3                   # login to ghcr
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
       - uses: goreleaser/goreleaser-action@v6          # run goreleaser
         with:
           version: latest

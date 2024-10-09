@@ -5,10 +5,8 @@ builds:
   goos:
   - linux
   - darwin
-  - windows
   goarch:
   - amd64
-  - arm
   - arm64
 archives:
 - name_template: "{{ .ProjectName }}-{{ if eq .Os \"darwin\" }}mac{{ else }}{{ .Os }}{{ end }}-{{ .Arch }}"
