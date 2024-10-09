@@ -48,7 +48,7 @@ jobs:
           cat release_description.md
           echo $IMAGEVERSION
 
-          git tag "v{$IMAGEVERSION }" -a
+          git tag $IMAGEVERSION -a
           git push origin --tags
 
 
