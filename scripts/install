@@ -17,7 +17,7 @@ detect_platform() {
             OS="linux"
             ;;
         Darwin*)
-            OS="mac"
+            OS="darwin"
             ;;
         *)
             echo "Unsupported OS: ${OS}"

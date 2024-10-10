@@ -10,11 +10,10 @@ import (
 	"github.com/tidwall/gjson"
 )
 
-// versionCmd represents the version command
-var versionCmd = &cobra.Command{
-	Use:   "version",
-	Short: "version",
-	Long:  `version`,
+var serverinfoCmd = &cobra.Command{
+	Use:   "serverinfo",
+	Short: "serverinfo",
+	Long:  `serverinfo`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		api, err := restclient.SplunkClient()
 		if err != nil {
@@ -30,7 +29,7 @@ var versionCmd = &cobra.Command{
 		if err != nil {
 			return fmt.Errorf("failed executing api : %v", err)
 		}
-		fmt.Print(gjson.Get(resp.String(), "generator.version"))
+		fmt.Print(gjson.Get(resp.String(), "@pretty"))
 		return nil
 
 	},
@@ -38,5 +37,5 @@ var versionCmd = &cobra.Command{
 
 func init() {
 	// Adding the version command to the root command
-	rootCmd.AddCommand(versionCmd)
+	rootCmd.AddCommand(serverinfoCmd)
 }
