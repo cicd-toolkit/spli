@@ -1,0 +1,86 @@
+#!/bin/bash
+
+set -e
+
+APP_NAME="spli"
+REPO_OWNER="cicd-toolkit"
+REPO_NAME="spli"
+API_URL="https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases/latest"
+
+# Function to determine the operating system and architecture
+detect_platform() {
+    OS="$(uname -s)"
+    ARCH="$(uname -m)"
+
+    case "${OS}" in
+        Linux*)
+            OS="linux"
+            ;;
+        Darwin*)
+            OS="mac"
+            ;;
+        *)
+            echo "Unsupported OS: ${OS}"
+            exit 1
+            ;;
+    esac
+
+    case "${ARCH}" in
+        x86_64)
+            ARCH="amd64"
+            ;;
+        aarch64|arm64)
+            ARCH="arm64"
+            ;;
+        *)
+            echo "Unsupported architecture: ${ARCH}"
+            exit 1
+            ;;
+    esac
+
+    PLATFORM="${OS}-${ARCH}"
+}
+
+# Function to get the download URL of the latest release
+get_latest_release() {
+    echo "Fetching the latest release information from GitHub..."
+    LATEST_RELEASE=$(curl -sL "${API_URL}" | grep "browser_download_url" | grep "${PLATFORM}" | cut -d '"' -f 4)
+
+    if [[ -z "$LATEST_RELEASE" ]]; then
+        echo "Failed to fetch the latest release information or unsupported platform: ${PLATFORM}"
+        exit 1
+    fi
+}
+
+# Function to download the CLI
+download_cli() {
+    TEMP_FILE=$(mktemp /tmp/${APP_NAME}.XXXXXX)
+
+    echo "Downloading ${APP_NAME} from ${LATEST_RELEASE}..."
+    curl -L "${LATEST_RELEASE}" -o "${TEMP_FILE}"
+
+    if [[ $? -ne 0 ]]; then
+        echo "Failed to download the ${APP_NAME} binary."
+        exit 1
+    fi
+
+    chmod +x "${TEMP_FILE}"
+    sudo mv "${TEMP_FILE}" "/usr/local/bin/${APP_NAME}"
+}
+
+# Function to confirm installation
+verify_installation() {
+    if command -v "${APP_NAME}" &> /dev/null; then
+        echo "${APP_NAME} CLI installed successfully."
+        "${APP_NAME}" --version
+    else
+        echo "Failed to install ${APP_NAME} CLI."
+        exit 1
+    fi
+}
+
+# Execute the functions
+detect_platform
+get_latest_release
+download_cli
+verify_installation

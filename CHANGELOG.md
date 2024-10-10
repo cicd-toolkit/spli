@@ -2,6 +2,10 @@
 
 All notable changes are documented in this file
 
+## 1.0.0
+
+- first release
+
 ## 0.0.2
 
 - update

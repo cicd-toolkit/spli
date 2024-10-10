@@ -12,23 +12,22 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// TestLoginCommand tests the login command
-func TestLoginCommand(t *testing.T) {
+func TestSetupCommand(t *testing.T) {
 	spliFile := ".spli"
 
 	defer func() {
 		os.Remove(spliFile)
 	}()
 	// Create a new root command for testing
-	rootCmd := &cobra.Command{Use: "login"}
-	rootCmd.AddCommand(loginCmd)
+	rootCmd := &cobra.Command{Use: "setup"}
+	rootCmd.AddCommand(setupCmd)
 
 	// Capture the output
 	var stdoutBuf bytes.Buffer
 	rootCmd.SetOut(io.Writer(&stdoutBuf))
 
 	// Set arguments for the command (simulate CLI input)
-	rootCmd.SetArgs([]string{"login", "--url", "http://test.com", "--username", "testuser", "--password", "testpass"})
+	rootCmd.SetArgs([]string{"setup", "--url", "http://test.com", "--username", "testuser", "--password", "testpass"})
 
 	// Run the command
 	if err := rootCmd.Execute(); err != nil {
