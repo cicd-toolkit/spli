@@ -5,6 +5,7 @@ spli
 .spli
 
 # test results
+release_description.md
 cover.out
 testResult_lint.xml
 testResult_unit.xml
