@@ -2,7 +2,7 @@
 
 All notable changes are documented in this file
 
-## 1.0.3
+## 1.0.4
 
 - suppress curl output on install
 
