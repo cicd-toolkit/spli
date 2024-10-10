@@ -30,7 +30,7 @@ var appCreateCmd = &cobra.Command{
 			SetFormData(map[string]string{
 				"name": args[0],
 			}).
-			Post(api.URL + "/services/apps/local")
+			Post("https://" + api.Host + "/services/apps/local")
 		if err != nil {
 			return fmt.Errorf("failed executing api : %v", err)
 		}

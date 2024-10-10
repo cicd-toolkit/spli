@@ -4,8 +4,6 @@ import (
 	"bytes"
 	"crypto/tls"
 	"fmt"
-	"net"
-	"net/url"
 	"os"
 	"path/filepath"
 
@@ -25,14 +23,7 @@ var appUploadCmd = &cobra.Command{
 		if err != nil {
 			return fmt.Errorf("failed api : %v", err)
 		}
-
-		u, err := url.Parse(api.URL)
-		if err != nil {
-			panic(err)
-		}
-		host, _, _ := net.SplitHostPort(u.Host)
-
-		newUrl := fmt.Sprintf("http://%s:8000/en-GB", host)
+		newUrl := fmt.Sprintf("%s://%s:%s/en-GB", api.WebProto, api.Host, api.WebPort)
 		client := resty.New()
 		client.SetTLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 

@@ -3,8 +3,6 @@ package cmd
 import (
 	"crypto/tls"
 	"fmt"
-	"net"
-	"net/url"
 
 	restclient "github.com/cicd-toolkit/spli/pkg/splunk_client"
 	"github.com/go-resty/resty/v2"
@@ -21,13 +19,7 @@ var bumpCmd = &cobra.Command{
 			return fmt.Errorf("failed api : %v", err)
 		}
 
-		u, err := url.Parse(api.URL)
-		if err != nil {
-			panic(err)
-		}
-		host, _, _ := net.SplitHostPort(u.Host)
-
-		newUrl := fmt.Sprintf("http://%s:8000/en-GB", host)
+		newUrl := fmt.Sprintf("%s://%s:%s/en-GB", api.WebProto, api.Host, api.WebPort)
 		client := resty.New()
 		client.SetTLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 
