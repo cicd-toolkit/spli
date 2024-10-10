@@ -18,10 +18,10 @@ type LoginData struct {
 // Variables to hold the flag values
 var loginURL, username, password string
 
-var loginCmd = &cobra.Command{
-	Use:   "login",
-	Short: "Login with URL, username, and password",
-	Long:  `This command allows you to login by providing a URL, username, and password.`,
+var setupCmd = &cobra.Command{
+	Use:   "setup",
+	Short: "setup with URL, username, and password",
+	Long:  `This command allows you to setup URL, username, and password.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// If flags are not provided, prompt the user
 		if loginURL == "" {
@@ -41,12 +41,12 @@ var loginCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(loginCmd)
+	rootCmd.AddCommand(setupCmd)
 
 	// Add flags for the login command
-	loginCmd.Flags().StringVarP(&loginURL, "url", "u", "", "URL for login")
-	loginCmd.Flags().StringVarP(&username, "username", "n", "", "Username for login")
-	loginCmd.Flags().StringVarP(&password, "password", "p", "", "Password for login")
+	setupCmd.Flags().StringVarP(&loginURL, "url", "u", "", "URL for login")
+	setupCmd.Flags().StringVarP(&username, "username", "n", "", "Username for login")
+	setupCmd.Flags().StringVarP(&password, "password", "p", "", "Password for login")
 }
 
 // saveLoginData saves the login data to a .spli file in JSON format
