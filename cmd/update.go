@@ -28,8 +28,7 @@ var updateCmd = &cobra.Command{
 			fmt.Print("Nothing to update")
 		} else {
 			fmt.Println("New version found : " + lastVersion.String())
-			fmt.Println("update your cli with\n")
-			fmt.Println(" curl https://raw.githubusercontent.com/cicd-toolkit/spli/master/scripts/install | bash")
+			fmt.Println("curl https://raw.githubusercontent.com/cicd-toolkit/spli/master/scripts/install | bash")
 		}
 
 		return nil
