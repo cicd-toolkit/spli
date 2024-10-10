@@ -2,6 +2,10 @@
 
 All notable changes are documented in this file
 
+## 1.0.4
+
+- suppress curl output on install
+
 ## 1.0.3
 
 - new subcommand `update`
