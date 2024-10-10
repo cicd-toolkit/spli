@@ -44,7 +44,7 @@ detect_platform() {
 # Function to get the download URL of the latest release
 get_latest_release() {
     echo "Fetching the latest release information from GitHub..."
-    LATEST_RELEASE=$(curl -sL "${API_URL}" | grep "browser_download_url" | grep "${PLATFORM}" | cut -d '"' -f 4)
+    LATEST_RELEASE=$(curl -sSL "${API_URL}" | grep "browser_download_url" | grep "${PLATFORM}" | cut -d '"' -f 4)
 
     if [[ -z "$LATEST_RELEASE" ]]; then
         echo "Failed to fetch the latest release information or unsupported platform: ${PLATFORM}"
@@ -57,7 +57,7 @@ download_cli() {
     TEMP_FILE=$(mktemp /tmp/${APP_NAME}.XXXXXX)
 
     echo "Downloading ${APP_NAME} from ${LATEST_RELEASE}..."
-    curl -L "${LATEST_RELEASE}" -o "${TEMP_FILE}"
+    curl -sSL "${LATEST_RELEASE}" -o "${TEMP_FILE}"
 
     if [[ $? -ne 0 ]]; then
         echo "Failed to download the ${APP_NAME} binary."
