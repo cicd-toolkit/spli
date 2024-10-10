@@ -24,7 +24,7 @@ var restartuiCmd = &cobra.Command{
 		resp, err := client.R().
 			SetQueryParam("output_mode", "json").
 			SetBasicAuth(api.Username, api.Password).
-			Post(api.URL + "/services/server/control/restart_webui")
+			Post("https://" + api.Host + "/services/server/control/restart_webui")
 		if err != nil {
 			return fmt.Errorf("failed executing api : %v", err)
 		}

@@ -8,24 +8,23 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// LoginData holds the login information
 type LoginData struct {
-	URL      string `json:"url"`
+	Host     string `json:"host"`
 	Username string `json:"username"`
 	Password string `json:"password"`
 }
 
 // Variables to hold the flag values
-var loginURL, username, password string
+var host, username, password string
 
 var setupCmd = &cobra.Command{
 	Use:   "setup",
-	Short: "setup with URL, username, and password",
+	Short: "setup with Host, username, and password",
 	Long:  `This command allows you to setup URL, username, and password.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// If flags are not provided, prompt the user
-		if loginURL == "" {
-			loginURL = promptInput("URL")
+		if host == "" {
+			host = promptInput("Host")
 		}
 		if username == "" {
 			username = promptInput("Username")
@@ -34,22 +33,20 @@ var setupCmd = &cobra.Command{
 			password = promptPassword("Password")
 		}
 
-		fmt.Printf("Logging in with URL: %s, Username: %s\n", loginURL, username)
+		fmt.Printf("Logging in with Host: %s, Username: %s\n", host, username)
 		// Save the login info to file
-		saveLoginData(LoginData{URL: loginURL, Username: username, Password: password})
+		saveLoginData(LoginData{Host: host, Username: username, Password: password})
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(setupCmd)
 
-	// Add flags for the login command
-	setupCmd.Flags().StringVarP(&loginURL, "url", "u", "", "URL for login")
+	setupCmd.Flags().StringVarP(&host, "host", "u", "", "splunk host")
 	setupCmd.Flags().StringVarP(&username, "username", "n", "", "Username for login")
 	setupCmd.Flags().StringVarP(&password, "password", "p", "", "Password for login")
 }
 
-// saveLoginData saves the login data to a .spli file in JSON format
 func saveLoginData(data LoginData) {
 	file, err := os.Create(".spli")
 	if err != nil {

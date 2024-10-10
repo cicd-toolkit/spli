@@ -9,9 +9,12 @@ import (
 
 // API struct to hold the base URL of the REST API and bearer token
 type API struct {
-	URL      string
-	Username string
-	Password string
+	Host      string
+	AdminPort string
+	WebPort   string
+	WebProto  string
+	Username  string
+	Password  string
 }
 
 const localCreds = ".spli"
@@ -33,14 +36,17 @@ func SplunkClient() (*API, error) {
 		}
 
 		return &API{
-			URL:      creds["url"].(string),
-			Username: creds["username"].(string),
-			Password: creds["password"].(string),
+			Host:      creds["host"].(string),
+			AdminPort: "8089",
+			WebPort:   "8000",
+			WebProto:  "http",
+			Username:  creds["username"].(string),
+			Password:  creds["password"].(string),
 		}, nil
 	}
 
-	url := getenv("SPLUNK_ENDPOINT", "http://localhost:8000/")
-	if url == "" {
+	host := getenv("SPLUNK_HOST", "localhost")
+	if host == "" {
 		return nil, errors.New("SPLUNK_ENDPOINT environment variable is not set")
 	}
 
@@ -54,8 +60,11 @@ func SplunkClient() (*API, error) {
 	}
 
 	return &API{
-		URL:      url,
-		Username: username,
-		Password: password,
+		Host:      host,
+		AdminPort: "8089",
+		WebPort:   "8000",
+		WebProto:  "http",
+		Username:  username,
+		Password:  password,
 	}, nil
 }

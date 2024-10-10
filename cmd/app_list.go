@@ -26,7 +26,7 @@ var appListCmd = &cobra.Command{
 			SetQueryParam("output_mode", "json").
 			SetBasicAuth(api.Username, api.Password).
 			SetHeader("Accept", "application/json").
-			Get(api.URL + "/services/apps/local")
+			Get("https://" + api.Host + "/services/apps/local")
 
 		fmt.Print(gjson.Get(resp.String(), "entry.#.name|@pretty"))
 		return nil

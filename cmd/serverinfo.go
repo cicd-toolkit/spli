@@ -25,7 +25,7 @@ var serverinfoCmd = &cobra.Command{
 		resp, err := client.R().
 			SetQueryParam("output_mode", "json").
 			SetBasicAuth(api.Username, api.Password).
-			Get(api.URL + "/services/server/info")
+			Get("https://" + api.Host + "/services/server/info")
 		if err != nil {
 			return fmt.Errorf("failed executing api : %v", err)
 		}

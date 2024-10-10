@@ -37,7 +37,7 @@ var appDeleteCmd = &cobra.Command{
 			SetQueryParam("output_mode", "json").
 			SetBasicAuth(api.Username, api.Password).
 			SetHeader("Accept", "application/json").
-			Delete(api.URL + "/services/apps/local/" + args[0])
+			Delete("https://" + api.Host + "/services/apps/local/" + args[0])
 		if err != nil {
 			return fmt.Errorf("failed executing api : %v", err)
 		}

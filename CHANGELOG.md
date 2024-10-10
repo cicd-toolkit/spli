@@ -2,6 +2,11 @@
 
 All notable changes are documented in this file
 
+## 1.0.2
+
+- new subcommand `version`
+- rescture host,port,proto
+
 ## 1.0.1
 
 - rename `version` in `serverinfo`

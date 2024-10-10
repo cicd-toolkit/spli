@@ -27,7 +27,7 @@ func TestSetupCommand(t *testing.T) {
 	rootCmd.SetOut(io.Writer(&stdoutBuf))
 
 	// Set arguments for the command (simulate CLI input)
-	rootCmd.SetArgs([]string{"setup", "--url", "http://test.com", "--username", "testuser", "--password", "testpass"})
+	rootCmd.SetArgs([]string{"setup", "--host", "test.com", "--username", "testuser", "--password", "testpass"})
 
 	// Run the command
 	if err := rootCmd.Execute(); err != nil {
@@ -51,7 +51,7 @@ func TestSetupCommand(t *testing.T) {
 	}
 
 	assert.NoError(t, err, "Should read credentials without error")
-	assert.Equal(t, "http://test.com", loginData["url"].(string), "URL should match expected value")
+	assert.Equal(t, "test.com", loginData["host"].(string), "host should match expected value")
 	assert.Equal(t, "testuser", loginData["username"].(string), "Username should match expected value")
 	assert.Equal(t, "testpass", loginData["password"].(string), "Password should match expected value")
 
