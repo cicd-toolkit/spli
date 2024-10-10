@@ -1,28 +1,30 @@
-export GO15VENDOREXPERIMENT=1
+APP_NAME := spli
+SRC_DIR := .
+GO := go
 
-exe = ./spli
-
-.PHONY: all build install test coverage test-deps
-
-all: install
-
-test-deps:
-	go get github.com/wadey/gocovmerge
-	go get github.com/gucumber/gucumber/cmd/gucumber
+# Commands
+all: build
 
 build:
-	go build
+	@echo "Building the binary..."
+	$(GO) build -o $(APP_NAME) $(SRC_DIR)
 
-install:
-	go install $(exe)
+test:
+	@echo "Running tests..."
+	$(GO) test ./...
 
-test-unit:
-	go test ./cmd/ -v
+clean:
+	@echo "Cleaning up..."
+	@rm -rf $(APP_NAME)
 
+fmt:
+	@echo "Formatting the code..."
+	$(GO) fmt ./...
 
-test: test-unit
+vet:
+	@echo "Vet the code..."
+	$(GO) vet ./...
 
-docker-build:
-	sudo docker run --rm -v `pwd`:/go/src/github.com/cicd-toolkit/spli -w /go/src/github.com/cicd-toolkit/spli golang:1.6-alpine sh -c 'apk add --no-cache make git && make build'
-	sudo docker build -t cicd-toolkit/spli .
-	rm -f spli
+lint:
+	@echo "Linting the code..."
+	@golint ./...
