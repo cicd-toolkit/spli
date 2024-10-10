@@ -61,8 +61,3 @@ jobs:
           args: release --clean --release-notes release_description.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: push tag
-        if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'master'
-        run: |
-          git push origin --tags
