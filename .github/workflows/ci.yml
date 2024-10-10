@@ -58,7 +58,7 @@ jobs:
         if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'master'
         with:
           version: latest
-          args: release --clean --release-notes $(cat release_description.md )
+          args: release --clean --release-notes release_description.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

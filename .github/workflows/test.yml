@@ -22,5 +22,5 @@ jobs:
         GOPROXY: "https://proxy.golang.org"
       run: go mod download
 
-    - name: Run unit tests
-      run: make test-unit
+    - name: Run tests
+      run: make test
