@@ -1,7 +1,5 @@
 builds:
 - binary: spli
-  main: .
-  ldflags: -s -w -X=github.com/cicd-toolkit/spli.version={{.Version}}
   goos:
   - linux
   - darwin
@@ -9,5 +7,5 @@ builds:
   - amd64
   - arm64
 archives:
-- name_template: "{{ .ProjectName }}-{{ if eq .Os \"darwin\" }}mac{{ else }}{{ .Os }}{{ end }}-{{ .Arch }}"
+- name_template: "{{ .ProjectName }}-{{ .Os }}-{{ .Arch }}"
   format: binary

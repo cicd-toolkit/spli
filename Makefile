@@ -17,6 +17,11 @@ clean:
 	@echo "Cleaning up..."
 	@rm -rf $(APP_NAME)
 
+release :
+	@echo "Cleaning up..."
+	@rm -rf dist
+	@goreleaser release --snapshot --clean
+
 fmt:
 	@echo "Formatting the code..."
 	$(GO) fmt ./...
