@@ -47,10 +47,10 @@ func SplunkClient() (*API, error) {
 
 	host := getenv("SPLUNK_HOST", "localhost")
 	if host == "" {
-		return nil, errors.New("SPLUNK_ENDPOINT environment variable is not set")
+		return nil, errors.New("SPLUNK_HOST environment variable is not set")
 	}
 
-	username := os.Getenv("SPLUNK_USERNAME")
+	username := getenv("SPLUNK_USERNAME", "admin")
 	if username == "" {
 		return nil, errors.New("SPLUNK_USERNAME environment variable is not set")
 	}

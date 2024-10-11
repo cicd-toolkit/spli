@@ -24,7 +24,7 @@ var restartCmd = &cobra.Command{
 		resp, err := client.R().
 			SetQueryParam("output_mode", "json").
 			SetBasicAuth(api.Username, api.Password).
-			Post("https://" + api.Host + "/services/server/control/restart")
+			Post(fmt.Sprintf("https://%s:%s/services/server/control/restart", api.Host, api.AdminPort))
 		if err != nil {
 			return fmt.Errorf("failed executing api : %v", err)
 		}

@@ -25,11 +25,11 @@ var server_rolesCmd = &cobra.Command{
 		resp, err := client.R().
 			SetQueryParam("output_mode", "json").
 			SetBasicAuth(api.Username, api.Password).
-			Get("https://" + api.Host + "/services/server/info")
+			Get(fmt.Sprintf("https://%s:%s/services/server/info", api.Host, api.AdminPort))
 		if err != nil {
 			return fmt.Errorf("failed executing api : %v", err)
 		}
-		fmt.Print(gjson.Get(resp.String(), "entry.0.content.server_roles|@pretty"))
+		cmd.Print(gjson.Get(resp.String(), "entry.0.content.server_roles|@pretty"))
 		return nil
 	},
 }
