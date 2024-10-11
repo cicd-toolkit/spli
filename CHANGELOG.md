@@ -3,6 +3,10 @@
 All notable changes are documented in this file
 
 
+## 1.0.7
+
+- fix `update`
+
 ## 1.0.6
 
 - new subcommand `docs`

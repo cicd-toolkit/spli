@@ -3,7 +3,7 @@ SRC_DIR := .
 GO := go
 
 # Commands
-all: build
+all: all build docs
 
 build:
 	@echo "Building the binary..."
