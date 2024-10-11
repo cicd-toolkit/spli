@@ -1,19 +1,19 @@
-## spli server_roles
+## spli profile
 
-server_roles
+configure profile
 
 ### Synopsis
 
-print the current server_roles of you instance
+This command allows you to set the active profile.
 
 ```
-spli server_roles [flags]
+spli profile [flags]
 ```
 
 ### Options
 
 ```
-  -h, --help   help for server_roles
+  -h, --help   help for profile
 ```
 
 ### SEE ALSO

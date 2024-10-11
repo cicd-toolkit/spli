@@ -11,7 +11,7 @@ import (
 // Config struct to handle configuration operations
 type Config struct {
 	filePath string
-	session  string
+	profile  string
 	cfg      *ini.File
 }
 
@@ -46,16 +46,12 @@ func NewConfig() (*Config, error) {
 			return nil, fmt.Errorf("failed to create new config file: %w", err)
 		}
 	}
-	return &Config{filePath: filePath, cfg: cfg, session: "default"}, nil
-}
-
-func (c *Config) SetSession(key string) {
-	c.session = key
+	return &Config{filePath: filePath, cfg: cfg, profile: "default"}, nil
 }
 
 // GetString retrieves a string value given a section and key
 func (c *Config) GetValue(key string) string {
-	return c.cfg.Section(c.session).Key(key).String()
+	return c.cfg.Section(c.profile).Key(key).String()
 }
 
 func (c *Config) GetString(section, key string) string {
@@ -68,7 +64,7 @@ func (c *Config) GetInt(section, key string) (int, error) {
 }
 
 func (c *Config) SetValue(key, value string) error {
-	c.cfg.Section(c.session).Key(key).SetValue(value)
+	c.cfg.Section(c.profile).Key(key).SetValue(value)
 	return c.cfg.SaveTo(c.filePath)
 }
 
@@ -84,7 +80,10 @@ func (c *Config) SetInt(section, key string, value int) error {
 	return c.cfg.SaveTo(c.filePath)
 }
 
-// DeleteKey deletes a key in a given section
+func (c *Config) Sections() []string {
+	return c.cfg.SectionStrings()
+}
+
 func (c *Config) DeleteKey(section, key string) error {
 	c.cfg.Section(section).DeleteKey(key)
 	return c.cfg.SaveTo(c.filePath)

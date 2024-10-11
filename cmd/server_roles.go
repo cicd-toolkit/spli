@@ -13,7 +13,7 @@ import (
 var server_rolesCmd = &cobra.Command{
 	Use:   "server_roles",
 	Short: "server_roles",
-	Long:  `server_roles`,
+	Long:  `print the current server_roles of you instance`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		api, err := restclient.SplunkClient()
 		if err != nil {

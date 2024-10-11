@@ -1,0 +1,23 @@
+package cmd
+
+import (
+	"bytes"
+	"io/ioutil"
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+)
+
+func Test_VersionCommand(t *testing.T) {
+	b := bytes.NewBufferString("")
+	rootCmd.SetOut(b)
+	rootCmd.SetArgs([]string{"version"})
+	rootCmd.Execute()
+	out, err := ioutil.ReadAll(b)
+	assert.NoError(t, err)
+	expectedOutput := `0.0.0 (Git SHA localdev)`
+	// cleanOut := strings.TrimSuffix(string(out), "\n")
+	assert.Equal(t, expectedOutput, string(out))
+}
+
+// TODO does not work... not sure why
