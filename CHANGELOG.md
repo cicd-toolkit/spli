@@ -2,12 +2,16 @@
 
 All notable changes are documented in this file
 
+
+## 1.0.6
+
+- new subcommand `docs`
+
 ## 1.0.5
 
 - fix wrong url
 - draft of `splunkbase`
 - add `config_manager`
-
 
 ## 1.0.4
 

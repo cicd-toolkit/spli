@@ -9,6 +9,13 @@ build:
 	@echo "Building the binary..."
 	$(GO) build -o $(APP_NAME) $(SRC_DIR)
 
+docs:
+	@echo "Building docs"
+	$(GO) build -o $(APP_NAME) $(SRC_DIR)
+	@mkdir ./docs
+	@rm -rf ./docs/*.md
+	./$(APP_NAME) docs --path ./docs
+
 test:
 	@echo "Running tests..."
 	$(GO) test ./... -v

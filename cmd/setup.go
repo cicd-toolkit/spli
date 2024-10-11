@@ -20,7 +20,7 @@ var host, username, password string
 var setupCmd = &cobra.Command{
 	Use:   "setup",
 	Short: "setup with Host, username, and password",
-	Long:  `This command allows you to setup URL, username, and password.`,
+	Long:  `This command allows you to setup Host, username, and password.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// If flags are not provided, prompt the user
 		if host == "" {
