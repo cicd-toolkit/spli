@@ -4,7 +4,7 @@ update
 
 ### Synopsis
 
-update
+check if there is a new version of the cli
 
 ```
 spli update [flags]

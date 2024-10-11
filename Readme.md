@@ -6,7 +6,7 @@ a quick cli to run command againsst your splunk instance
 ## Install
 
 ```
-curl https://raw.githubusercontent.com/cicd-toolkit/spli/master/scripts/install | bash
+curl -sSL https://raw.githubusercontent.com/cicd-toolkit/spli/master/scripts/install | bash
 ```
 
 ## Documentation
