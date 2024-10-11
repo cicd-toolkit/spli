@@ -27,6 +27,7 @@ spli [flags]
 * [spli server_roles](spli_server_roles.md)	 - server_roles
 * [spli serverinfo](spli_serverinfo.md)	 - serverinfo
 * [spli setup](spli_setup.md)	 - setup with Host, username, and password
+* [spli splunkbase](spli_splunkbase.md)	 - splunkbase
 * [spli update](spli_update.md)	 - update
 * [spli version](spli_version.md)	 - version
 
