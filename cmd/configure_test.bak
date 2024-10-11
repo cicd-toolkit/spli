@@ -19,7 +19,7 @@ func TestSetupCommand(t *testing.T) {
 		os.Remove(spliFile)
 	}()
 	// Create a new root command for testing
-	rootCmd := &cobra.Command{Use: "setup"}
+	rootCmd := &cobra.Command{Use: "configure"}
 	rootCmd.AddCommand(setupCmd)
 
 	// Capture the output

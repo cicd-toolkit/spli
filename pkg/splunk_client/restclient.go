@@ -1,10 +1,9 @@
 package splunk_client
 
 import (
-	"encoding/json"
-	"errors"
-	"io/ioutil"
-	"os"
+	"log"
+
+	config "github.com/cicd-toolkit/spli/pkg/config_manager"
 )
 
 // API struct to hold the base URL of the REST API and bearer token
@@ -17,54 +16,29 @@ type API struct {
 	Password  string
 }
 
-const localCreds = ".spli"
+var profileName string
 
 // SplunkClient creates a new API instance with authentication
 func SplunkClient() (*API, error) {
 
-	if _, err := os.Stat(localCreds); err == nil {
-		// File exists, read configuration from file
-		creds := make(map[string]interface{})
-		file, err := os.Open(localCreds)
-		defer file.Close()
+	cfg, err := config.NewConfig()
 
-		byteValue, err := ioutil.ReadAll(file)
-
-		err = json.Unmarshal(byteValue, &creds)
-		if err != nil {
-			return nil, errors.New("errro reading json")
-		}
-
-		return &API{
-			Host:      creds["host"].(string),
-			AdminPort: "8089",
-			WebPort:   "8000",
-			WebProto:  "http",
-			Username:  creds["username"].(string),
-			Password:  creds["password"].(string),
-		}, nil
+	if err != nil {
+		log.Fatalf("Error initializing config: %v", err)
 	}
-
-	host := getenv("SPLUNK_HOST", "localhost")
-	if host == "" {
-		return nil, errors.New("SPLUNK_HOST environment variable is not set")
+	profileName = cfg.GetString("", "active_profile")
+	if profileName == "" {
+		profileName = cfg.GetString("", "active_profile")
 	}
-
-	username := getenv("SPLUNK_USERNAME", "admin")
-	if username == "" {
-		return nil, errors.New("SPLUNK_USERNAME environment variable is not set")
+	if profileName == "" {
+		profileName = "default"
 	}
-	password := os.Getenv("SPLUNK_PASSWORD")
-	if password == "" {
-		return nil, errors.New("SPLUNK_PASSWORD environment variable is not set")
-	}
-
 	return &API{
-		Host:      host,
-		AdminPort: "8089",
-		WebPort:   "8000",
-		WebProto:  "http",
-		Username:  username,
-		Password:  password,
+		Host:      cfg.GetString(profileName, "host"),
+		AdminPort: cfg.GetString(profileName, "admin_port"),
+		WebPort:   cfg.GetString(profileName, "web_port"),
+		WebProto:  cfg.GetString(profileName, "protocol"),
+		Username:  cfg.GetString(profileName, "username"),
+		Password:  cfg.GetString(profileName, "password"),
 	}, nil
 }

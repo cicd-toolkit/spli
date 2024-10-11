@@ -3,18 +3,17 @@ SRC_DIR := .
 GO := go
 
 # Commands
-all: all build docs
+all: build docs test
 
-build:
+build: clean fmt
 	@echo "Building the binary..."
 	$(GO) build -o $(APP_NAME) $(SRC_DIR)
 
-docs:
+docs: build
 	@echo "Building docs"
-	$(GO) build -o $(APP_NAME) $(SRC_DIR)
+	@rm -rf ./docs/
 	@mkdir ./docs
-	@rm -rf ./docs/*.md
-	./$(APP_NAME) docs --path ./docs
+	@./$(APP_NAME) docs --path ./docs
 
 test:
 	@echo "Running tests..."
@@ -24,7 +23,7 @@ clean:
 	@echo "Cleaning up..."
 	@rm -rf $(APP_NAME)
 
-release :
+release:
 	@echo "Cleaning up..."
 	@rm -rf dist
 	@goreleaser release --snapshot --clean
