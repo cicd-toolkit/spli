@@ -19,11 +19,12 @@ type GenDocCommand struct {
 func init() {
 	genDocCommand := &GenDocCommand{}
 	genDocCommand.cmd = &cobra.Command{
-		Use:           "docs",
-		Short:         "Generate document in MarkDown format",
-		Args:          cobra.NoArgs,
-		SilenceErrors: true,
-		SilenceUsage:  true,
+		Use:               "docs",
+		Short:             "Generate document in MarkDown format",
+		Args:              cobra.NoArgs,
+		SilenceErrors:     true,
+		SilenceUsage:      true,
+		DisableAutoGenTag: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return genDocCommand.runGenDoc(args)
 		},
@@ -47,5 +48,6 @@ func (g *GenDocCommand) runGenDoc(args []string) error {
 		}
 		return err
 	}
+	g.cmd.Parent().DisableAutoGenTag = true
 	return doc.GenMarkdownTree(g.cmd.Parent(), g.path)
 }

@@ -3,11 +3,14 @@
 All notable changes are documented in this file
 
 
+## 1.0.9
+
+- cleanup docs
+
 ## 1.0.8
 
 - restructure creds file using `~/.spli/config` in ini format
 - rename `setup` to `configure`
-
 
 ## 1.0.7
 
