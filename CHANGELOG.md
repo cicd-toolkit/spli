@@ -4,6 +4,10 @@ All notable changes are documented in this file
 
 ## 1.0.4
 
+- new subcommand `docs`
+
+## 1.0.4
+
 - suppress curl output on install
 
 ## 1.0.3

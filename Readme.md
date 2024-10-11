@@ -9,6 +9,10 @@ a quick cli to run command againsst your splunk instance
 curl https://raw.githubusercontent.com/cicd-toolkit/spli/master/scripts/install | bash
 ```
 
+## Documentation
+
+please check [here](./docs/spli.md)
+
 ## Test
 
 ```
