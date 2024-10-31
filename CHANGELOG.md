@@ -3,6 +3,17 @@
 All notable changes are documented in this file
 
 
+## 1.0.10
+
+- add env override
+    SPLUNK_ACTIVE_PROFILE
+    SPLUNK_HOST
+    SPLUNK_ADMIN_PORT
+    SPLUNK_WEB_PORT
+    SPLUNK_PROTOCOL
+    SPLUNK_USERNAME
+    SPLUNK_PASSWORD
+
 ## 1.0.9
 
 - cleanup docs
