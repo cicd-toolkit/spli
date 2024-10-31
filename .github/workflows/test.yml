@@ -42,5 +42,22 @@ jobs:
         GOPROXY: "https://proxy.golang.org"
       run: go mod download
 
+
+    - name: Create local config
+      run: |
+        mkdir ~/.spli
+        cat <<EOL > ~/.spli/config
+        [default]
+        host                = localhost
+        admin_port          = 8089
+        web_port            = 8000
+        protocol            = http
+        EOL
+
+
     - name: Run tests
-      run: make test
+      run: |
+        make test
+      env:
+        SPLUNK_USERNAME: "admin"
+        SPLUNK_PASSWORD: "Admin-1234"
