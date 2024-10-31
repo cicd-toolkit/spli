@@ -12,6 +12,7 @@ require (
 
 require (
 	github.com/Masterminds/semver/v3 v3.3.0 // indirect
+	github.com/blang/semver v3.5.1+incompatible // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.4 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/go-resty/resty/v2 v2.15.3 // indirect

@@ -59,5 +59,6 @@ jobs:
       run: |
         make test
       env:
+        SPLUNK_VERSION: ${{ matrix.version }}
         SPLUNK_USERNAME: "admin"
         SPLUNK_PASSWORD: "Admin-1234"
