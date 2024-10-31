@@ -13,10 +13,11 @@ import (
 )
 
 var appUploadCmd = &cobra.Command{
-	Use:   "upload",
-	Short: "upload",
-	Long:  `upload`,
-	Args:  cobra.ExactArgs(1),
+	Use:     "upload",
+	Short:   "upload",
+	Long:    `upload`,
+	Aliases: []string{"add", "up"},
+	Args:    cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 
 		api, err := restclient.SplunkClient()
@@ -27,24 +28,7 @@ var appUploadCmd = &cobra.Command{
 		client := resty.New()
 		client.SetTLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 
-		resp1, err := client.R().
-			EnableTrace().
-			SetHeader("Content-Type", "application/x-www-form-urlencoded").
-			Get(newUrl + "/account/login")
-
-		cvalStr := extractField(`"cval":(\d+)`, resp1.String())
-
-		respLogin, err := client.R().
-			EnableTrace().
-			SetHeader("Content-Type", "application/x-www-form-urlencoded").
-			SetFormData(map[string]string{
-				"username":          api.Username,
-				"password":          api.Password,
-				"set_has_logged_in": "false",
-				"cval":              cvalStr,
-			}).
-			Post(newUrl + "/account/login")
-
+		respLogin, err := api.DoLogin()
 		if err != nil {
 			return fmt.Errorf("failed executing api : %v", err)
 		}

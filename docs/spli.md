@@ -22,6 +22,7 @@ spli [flags]
 * [spli bump](spli_bump.md)	 - bump
 * [spli configure](spli_configure.md)	 - configure with Host, username, and password
 * [spli docs](spli_docs.md)	 - Generate document in MarkDown format
+* [spli messsage](spli_messsage.md)	 - messsage
 * [spli profile](spli_profile.md)	 - configure profile
 * [spli refresh](spli_refresh.md)	 - refresh
 * [spli restart](spli_restart.md)	 - restart
