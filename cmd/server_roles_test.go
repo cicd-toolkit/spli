@@ -12,7 +12,7 @@ func Test_ServerRoleCommand(t *testing.T) {
 	assert.NoError(t, err)
 	expectedOutput := `["indexer", "license_master", "kv_store"]`
 
-	isGTE, err := IsVersionGTE("9.0.0")
+	isGTE, _, err := IsVersionGTE("9.0.0")
 	if err != nil {
 		t.Fatalf("Error checking SPLUNK_VERSION: %v", err)
 	}

@@ -1,0 +1,17 @@
+package cmd
+
+import (
+	"strings"
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+)
+
+func Test_ServerInfoCommand(t *testing.T) {
+	out, err := executeCommand(rootCmd, []string{"serverinfo", "--jsonpath", "'origin|@pretty'"}...)
+	assert.NoError(t, err)
+	expectedOutput := "https://localhost:8089/services/server/info"
+
+	cleanOut := strings.TrimSuffix(string(out), "\n")
+	assert.Equal(t, expectedOutput, cleanOut)
+}

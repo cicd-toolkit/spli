@@ -10,77 +10,91 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func IsVersionInRange(minVersion, maxVersion string) (bool, error) {
+// getParsedSplunkVersion fetches and parses SPLUNK_VERSION environment variable.
+func getParsedSplunkVersion() (semver.Version, string, error) {
 	currentVersion := os.Getenv("SPLUNK_VERSION")
 	if currentVersion == "" {
-		return false, fmt.Errorf("SPLUNK_VERSION is not set")
+		return semver.Version{}, "", fmt.Errorf("SPLUNK_VERSION is not set")
 	}
 
-	current, err := semver.ParseTolerant(currentVersion)
+	parsedVersion, err := semver.ParseTolerant(currentVersion)
 	if err != nil {
-		return false, fmt.Errorf("failed to parse SPLUNK_VERSION: %v", err)
+		return semver.Version{}, currentVersion, fmt.Errorf("failed to parse SPLUNK_VERSION: %v", err)
 	}
 
-	min, err := semver.ParseTolerant(minVersion)
+	return parsedVersion, currentVersion, nil
+}
+
+// IsVersionEQ returns true if SPLUNK_VERSION is exactly equal to targetVersion.
+func IsVersionEQ(targetVersion string) (bool, string, error) {
+	current, currentVersion, err := getParsedSplunkVersion()
 	if err != nil {
-		return false, fmt.Errorf("failed to parse minimum version: %v", err)
+		return false, currentVersion, err
 	}
 
-	max, err := semver.ParseTolerant(maxVersion)
+	target, err := semver.ParseTolerant(targetVersion)
 	if err != nil {
-		return false, fmt.Errorf("failed to parse maximum version: %v", err)
+		return false, currentVersion, fmt.Errorf("failed to parse target version: %v", err)
 	}
 
-	// Check if current version is within the range (minVersion, maxVersion)
-	return current.GT(min) && current.LT(max), nil
+	return current.Equals(target), currentVersion, nil
 }
 
 // IsVersionGTE returns true if SPLUNK_VERSION is greater than or equal to minVersion.
-func IsVersionGTE(minVersion string) (bool, error) {
-	currentVersion := os.Getenv("SPLUNK_VERSION")
-	if currentVersion == "" {
-		return false, fmt.Errorf("SPLUNK_VERSION is not set")
-	}
-
-	current, err := semver.ParseTolerant(currentVersion)
+func IsVersionGTE(minVersion string) (bool, string, error) {
+	current, currentVersion, err := getParsedSplunkVersion()
 	if err != nil {
-		return false, fmt.Errorf("failed to parse SPLUNK_VERSION: %v", err)
+		return false, currentVersion, err
 	}
 
 	min, err := semver.ParseTolerant(minVersion)
 	if err != nil {
-		return false, fmt.Errorf("failed to parse minimum version: %v", err)
+		return false, currentVersion, fmt.Errorf("failed to parse minimum version: %v", err)
 	}
 
-	// Check if current version is greater than or equal to the minVersion
-	return current.GTE(min), nil
+	return current.GTE(min), currentVersion, nil
 }
 
-func IsVersionLTE(maxVersion string) (bool, error) {
-	currentVersion := os.Getenv("SPLUNK_VERSION")
-	if currentVersion == "" {
-		return false, fmt.Errorf("SPLUNK_VERSION is not set")
-	}
-
-	current, err := semver.ParseTolerant(currentVersion)
+// IsVersionLTE returns true if SPLUNK_VERSION is less than or equal to maxVersion.
+func IsVersionLTE(maxVersion string) (bool, string, error) {
+	current, currentVersion, err := getParsedSplunkVersion()
 	if err != nil {
-		return false, fmt.Errorf("failed to parse SPLUNK_VERSION: %v", err)
+		return false, currentVersion, err
 	}
 
 	max, err := semver.ParseTolerant(maxVersion)
 	if err != nil {
-		return false, fmt.Errorf("failed to parse maximum version: %v", err)
+		return false, currentVersion, fmt.Errorf("failed to parse maximum version: %v", err)
 	}
 
-	// Check if current version is less than or equal to the maxVersion
-	return current.LTE(max), nil
+	return current.LTE(max), currentVersion, nil
 }
 
-func executeCommand(root *cobra.Command, arg string) (output string, err error) {
+// IsVersionInRange returns true if SPLUNK_VERSION is greater than minVersion and less than maxVersion.
+func IsVersionInRange(minVersion, maxVersion string) (bool, string, error) {
+	current, currentVersion, err := getParsedSplunkVersion()
+	if err != nil {
+		return false, currentVersion, err
+	}
+
+	min, err := semver.ParseTolerant(minVersion)
+	if err != nil {
+		return false, currentVersion, fmt.Errorf("failed to parse minimum version: %v", err)
+	}
+
+	max, err := semver.ParseTolerant(maxVersion)
+	if err != nil {
+		return false, currentVersion, fmt.Errorf("failed to parse maximum version: %v", err)
+	}
+
+	return current.GT(min) && current.LT(max), currentVersion, nil
+}
+
+func executeCommand(root *cobra.Command, args ...string) (output string, err error) {
 	buf := new(bytes.Buffer)
 	root.SetOut(buf)
 	root.SetErr(buf)
-	root.SetArgs(strings.Fields(arg))
+	root.SetArgs(args)
 
 	err = root.Execute()
 	return strings.TrimSpace(buf.String()), err
