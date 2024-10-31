@@ -3,6 +3,10 @@
 All notable changes are documented in this file
 
 
+## 1.0.12
+
+- update unittest with multiple version
+
 ## 1.0.11
 
 - add messages command

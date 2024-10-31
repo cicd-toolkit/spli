@@ -29,13 +29,16 @@ var serverinfoCmd = &cobra.Command{
 		if err != nil {
 			return fmt.Errorf("failed executing api : %v", err)
 		}
-		fmt.Print(gjson.Get(resp.String(), "@pretty"))
+		cmd.Print(gjson.Get(resp.String(), serverinfoJsonPath))
 		return nil
 
 	},
 }
 
+var serverinfoJsonPath string
+
 func init() {
 	// Adding the version command to the root command
 	rootCmd.AddCommand(serverinfoCmd)
+	serverinfoCmd.Flags().StringVarP(&serverinfoJsonPath, "jsonpath", "", "@pretty", "jsonpath using gjson")
 }
