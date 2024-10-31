@@ -3,6 +3,10 @@
 All notable changes are documented in this file
 
 
+## 1.0.11
+
+- add messages command
+
 ## 1.0.10
 
 - add env override
