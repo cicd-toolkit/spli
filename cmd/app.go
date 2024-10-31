@@ -11,7 +11,7 @@ var appCmd = &cobra.Command{
 	Short: "app",
 	Long:  `app`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("please provide a sub-command")
+		fmt.Println("please provide a sub-command for app")
 	},
 }
 
