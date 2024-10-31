@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"gopkg.in/ini.v1"
 )
@@ -55,6 +56,10 @@ func (c *Config) GetValue(key string) string {
 }
 
 func (c *Config) GetString(section, key string) string {
+	env_key := fmt.Sprintf("SPLUNK_%s", strings.ToUpper(key))
+	if value, exists := os.LookupEnv(env_key); exists {
+		return value
+	}
 	return c.cfg.Section(section).Key(key).String()
 }
 
